@@ -1,6 +1,8 @@
 # Pizza-Pantry
 A basic inventory management web app for a pizza shop, built in next.js . Users can sign up/log in, view inventory, add new items, edit/update quantities (add/remove), and delete items. 
 
+used Gemini's suggestion to solve the css import error. 
+
 README including:
 o Tech choices & architecture overview (1–2 pages max)
 o Setup steps (.env.example, seed instructions)
@@ -13,3 +15,6 @@ o Known limitations & next steps
 - Validation & Security (15): Input validation, auth checks, safe APIs
 - Docs & DevEx (10): README, env/seed, clear run instructions
 - Testing/Bonus (5): Any automated tests or optional extras
+
+
+https://clerk.com/docs/nextjs/guides/development/custom-sign-in-or-up-page
