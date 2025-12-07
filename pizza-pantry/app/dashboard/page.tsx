@@ -8,11 +8,12 @@ import { GetItemResults } from '../interfaces/api';
 
 const Dashboard = () => {
   const [items,setItems] = useState<ItemFromDB[]>({} as ItemFromDB[])
+  const [apiResults,setResults] = useState<GetItemResults>({} as GetItemResults)
   const fetchItems = async ()=>{
     const apiResults : GetItemResults = await getItems() ;
     if (!apiResults.err)
       setItems(apiResults.success) ;
-
+    setResults(apiResults) ;
   }
 
   useEffect(()=>{
@@ -61,26 +62,22 @@ const Dashboard = () => {
                     </tr>
                 </thead>
                 <tbody>
-                  {
-                    items && items.length>0 ? 
-                      items.map((obj, i)=> 
+                  { items.map((obj, i)=> 
                         <ItemTableDataCard  key={i}  name={obj.name} 
                         category={obj.category} unit={obj.unit} quantity={obj.quantity}
                         />
                       )
-                    : 
-                    <h1 className='text-error text-3xl'> Nothing In Inventory</h1>
                   }
                     
                 </tbody>
             </table>
                     : 
-                    <h2 className='link-error'> Nothing In Inventory</h2>
+                    <h2 className='link-error'> {apiResults.err&&apiResults.err.length> 0? apiResults.err: "Nothing In Inventory"}</h2>
                   }
 
         </div>
    
- 
+        <>{}</>
     </div>
   )
 }

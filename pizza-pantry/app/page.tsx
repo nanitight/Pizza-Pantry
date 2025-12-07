@@ -1,4 +1,5 @@
 import { SignedOut, SignInButton } from "@clerk/nextjs";
+import Image from "next/image";
 
 export default function Home() {
   return (<main className="min-h-screen bg-base-100">
@@ -63,7 +64,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           <div className="mockup-window border bg-base-300">
             <div className="p-8">
-              <img
+              <Image
                 src="/inventory 1.gif"
                 alt="App Preview"
                 className="rounded-lg shadow-lg"
@@ -73,7 +74,7 @@ export default function Home() {
 
           <div className="mockup-window border bg-base-300">
             <div className="p-8">
-              <img
+              <Image
                 src="/inventory 2.gif"
                 alt="App Preview 2"
                 className="rounded-lg shadow-lg"
