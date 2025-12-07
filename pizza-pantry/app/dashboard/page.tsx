@@ -2,10 +2,11 @@ import React from 'react'
 import PizzaCard from '../components/PizzaCard'
 import ItemTableDataCard from '../components/ItemTableDataCard';
 import  getCollection from '../lib/db';
+import Link from 'next/link';
 
 const Dashboard = async () => {
   const items : string[] = [] ;
-  const itemsCollection = await getCollection("items") ; 
+  // const itemsCollection = await getCollection("items") ; 
   return (
     <div className="p-4 bg-base-100 max-h-1">
         <h1 className="text-3xl font-bold mb-4 text-primary">Inventory Stock Tracker</h1>
@@ -18,20 +19,20 @@ const Dashboard = async () => {
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path fillRule="evenodd" d="M9.965 11.536a5.75 5.75 0 1 1 1.06-1.06l2.083 2.083a.75.75 0 0 1-1.06 1.06l-2.083-2.083Zm-4.215-.285a4.25 4.25 0 1 0 0-8.5 4.25 4.25 0 0 0 0 8.5Z" clipRule="evenodd" /></svg>
                 </label>
                 
-                <select className="select select-bordered w-full max-w-xs md:w-auto">
-                    <option disabled defaultValue={""}>Sort By</option>
+                <select defaultValue={"select"} className="select select-bordered w-full max-w-xs md:w-auto">
+                    <option disabled value={"select"}>Sort By</option>
                     <option>Name</option>
                     <option>CreatedDate</option>
                     <option>Quantity</option>
                 </select>
             </div>
 
-            <button className="btn btn-primary w-full md:w-auto">
+            <Link className="btn btn-primary w-full md:w-auto"  href={"/dashboard/add"}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
                 Create New Item
-            </button>
+            </Link>
         </div>
           <div className="overflow-x-auto">
             {
