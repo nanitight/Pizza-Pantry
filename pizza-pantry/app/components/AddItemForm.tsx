@@ -1,6 +1,6 @@
 "use client" ;
 import React, { useState } from 'react'
-import { AddingOperation, BaseItem, ItemToDBRecord } from '../interfaces/defaults'
+import { AddingOperation, BaseItem, Item } from '../interfaces/defaults'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { BaseItemScehemeValidator } from '../dashboard/validation'
 import { useForm } from 'react-hook-form'
@@ -29,7 +29,7 @@ const AddItemForm :React.FC<AddingOperation> = ({
     const createItem = async (data : BaseItem) =>{
         setLoading(true) ;
         console.log('c',data)
-        var item : ItemToDBRecord = 
+        const item : Item = 
         {
             ...data ,
             createdAt : new Date() ,
@@ -39,7 +39,7 @@ const AddItemForm :React.FC<AddingOperation> = ({
                 email : user.email ? user.email : "",
             }
         }
-        var res : AddItemResults = await addToDb(item) ;
+        const res : AddItemResults = await addToDb(item) ;
         console.log(res, item)
         setLoading(false) ;
         if (res.success && res.success.length > 0)

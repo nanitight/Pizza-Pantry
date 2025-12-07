@@ -1,6 +1,6 @@
 "use server"
 import { Collection, MongoClient, ServerApiVersion } from "mongodb";
-import {  BaseItem, ItemFromDB, ItemToDBRecord } from "../interfaces/defaults";
+import {  BaseItem, ItemFromDB, Item } from "../interfaces/defaults";
 import { AddItemResults, GetItemResults } from "../interfaces/api";
 
 const uri = process.env.DB_URI ;  
@@ -39,7 +39,7 @@ async function getCollection(collectionName:string,from:boolean = false) {
     try{
         const db = await getDB(dbName) ;
         if (db)
-          return db.collection<ItemToDBRecord>(collectionName) ;
+          return db.collection<Item>(collectionName) ;
 
     }
     catch(err) 
@@ -48,8 +48,8 @@ async function getCollection(collectionName:string,from:boolean = false) {
 }
 
 
-export const submit = async (data: ItemToDBRecord) : Promise<AddItemResults>  =>{
-  let res : AddItemResults = {
+export const submit = async (data: Item) : Promise<AddItemResults>  =>{
+  const res : AddItemResults = {
       success : "" ,
       err : "" 
   }
@@ -73,7 +73,7 @@ export const submit = async (data: ItemToDBRecord) : Promise<AddItemResults>  =>
 }
 
 export const getItems = async () : Promise<GetItemResults> =>  {
-  let res : GetItemResults = {
+  const res : GetItemResults = {
       success : [] ,
       err : "" 
   }

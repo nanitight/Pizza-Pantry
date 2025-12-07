@@ -8,9 +8,7 @@ export interface Item extends BaseItem{
     createdBy : ClerkUser
 }
 
-export interface ItemToDBRecord extends Item{
-    
-}
+
 interface DBObject {
     _id: ObjectId;
 }
@@ -36,7 +34,7 @@ export interface ClerkUser {
 }
 
 export interface AddingOperation{
-    addToDb : (data: ItemToDBRecord) => Promise< AddItemResults>,
+    addToDb : (data: Item) => Promise< AddItemResults>,
     onSuccess? : ()=>void
     user : ClerkUser
 }
