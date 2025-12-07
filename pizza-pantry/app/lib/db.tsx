@@ -1,5 +1,5 @@
 "use server"
-import { Collection, MongoClient, ServerApiVersion } from "mongodb";
+import { Collection, MongoClient, ObjectId, ServerApiVersion } from "mongodb";
 import {  BaseItem, ItemFromDB, Item } from "../interfaces/defaults";
 import { AddItemResults, GetItemResults } from "../interfaces/api";
 
@@ -95,6 +95,38 @@ export const getItems = async () : Promise<GetItemResults> =>  {
           })
           .toArray() ;
           res.success = JSON.parse(JSON.stringify(find)) ;
+              return res ;
+  }
+  catch(err){
+    console.log("some ",err)
+    res.err = "something wrong" ;
+    return res ;
+  }
+}
+}
+
+export const deleteItem = async (id:ObjectId) : Promise<GetItemResults> =>  {
+  const res : GetItemResults = {
+      success : [] ,
+      err : "" 
+  }
+  const db = await getDB(dbName) ;
+        if (!db){
+          return res ;
+        }
+        else{
+          const collection = db.collection<ItemFromDB>(collName) ;
+        
+        if ( collection == null ){
+          res.err = "Server error!" ;
+          return res; 
+        }
+
+        try{
+          const deleted = await collection.deleteOne({
+            _id : id
+          }) ;
+          res.success = [] ;
               return res ;
   }
   catch(err){
