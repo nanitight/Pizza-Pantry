@@ -25,6 +25,12 @@ A basic inventory management web app for a pizza shop, built in next.js . Users 
 ## Deployed 
 - https://pizza-pantry-psi.vercel.app/ 
 
+## Pictures / Reel
+
+- ![Preview](./pizza-pantry/public/inventory 1.gif)
+- ![Preview](./pizza-pantry/public/inventory 2.gif)
+
+
 ## References
 - https://clerk.com/docs/nextjs/guides/development/custom-sign-in-or-up-page
 
