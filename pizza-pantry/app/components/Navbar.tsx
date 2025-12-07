@@ -2,19 +2,19 @@ import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@cl
 import Link from "next/link";
 
 export default function Navbar(){
-    return <nav className="flex gap-8 text-lg">
-        <Link href={"/"}>Home</Link>
-        <Link href={"/"}>Home</Link>
-        <Link href={"/users"}>Users</Link>
+    return <nav className="flex gap-8 text-lg pb-5">
+        <Link className="btn btn-outline btn-lg" href={"/"}>Home</Link>
+        <Link className="btn btn-outline btn-lg" href={"/dashboard"}>Dashboard</Link>
         <SignedIn>
             <UserButton />
         </SignedIn>
-         <SignedOut>
-              <SignInButton />
+        <SignedOut>
+              <SignInButton>
+                <button className="btn btn-outline btn-lg">Sign In</button>
+              </SignInButton>
               <SignUpButton>
-                <button className="bg-[#6c47ff] text-ceramic-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
-                  Sign Up
-                </button>
+                <button className="btn btn-outline btn-lg">Sign Up</button>
+                  
               </SignUpButton>
             </SignedOut>
     </nav>
