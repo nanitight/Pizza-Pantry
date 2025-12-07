@@ -9,6 +9,7 @@ import { GetItemResults } from '../interfaces/api';
 const Dashboard = () => {
   const [items,setItems] = useState<ItemFromDB[]>({} as ItemFromDB[])
   const [apiResults,setResults] = useState<GetItemResults>({} as GetItemResults)
+  const [currItem,setCurrItem] = useState<ItemFromDB>({} as ItemFromDB)
   const fetchItems = async ()=>{
     const apiResults : GetItemResults = await getItems() ;
     if (!apiResults.err)
@@ -50,27 +51,28 @@ const Dashboard = () => {
         </div>
           <div className="overflow-x-auto">
             {
-                    items && items.length>0 ? 
+                    items && items.length>0 ? <>
                       <table className="table table-zebra w-full">
-                <thead>
-                    <tr>
-                        <th className="w-1/12">Unit</th>
-                        <th className="w-4/12">Item Name</th>
-                        <th className="w-2/12">Category</th>
-                        <th className="w-1/12 text-center">Stock</th>
-                        <th className="w-4/12 text-center">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                  { items.map((obj, i)=> 
-                        <ItemTableDataCard  key={i}  name={obj.name} 
-                        category={obj.category} unit={obj.unit} quantity={obj.quantity}
-                        />
-                      )
-                  }
-                    
-                </tbody>
-            </table>
+                              <thead>
+                                  <tr>
+                                      <th className="w-1/12">Unit</th>
+                                      <th className="w-4/12">Item Name</th>
+                                      <th className="w-2/12">Category</th>
+                                      <th className="w-1/12 text-center">Stock</th>
+                                      <th className="w-4/12 text-center">Actions</th>
+                                  </tr>
+                              </thead>
+                                
+                              <tbody>
+                                { items.map((obj, i)=> 
+                                      <ItemTableDataCard  key={i} obj ={obj} 
+                                      />
+                                    )
+                                }
+                                  
+                              </tbody>
+                          </table>
+                          </>
                     : 
                     <h2 className='link-error'> {apiResults.err&&apiResults.err.length> 0? apiResults.err: "Nothing In Inventory"}</h2>
                   }
