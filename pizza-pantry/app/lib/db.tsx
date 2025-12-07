@@ -35,7 +35,7 @@ async function getCollection(collectionName:string) {
     try{
         const db = await getDB('pizza-pantry') ;
         if (db)
-            return db.collection<ItemDBRecord>(collectionName) ;
+          return db.collection<ItemDBRecord>(collectionName) ;
     }
     catch(err) 
     {console.log(err) ;}
