@@ -13,6 +13,7 @@ const AddItemForm :React.FC<AddingOperation> = ({
     addToDb,user,onSuccess
 }) => {
     const [loading,setLoading] = useState(false)
+    const [reqError, setError] = useState("")
     const {register,handleSubmit,formState : {errors}} = useForm<BaseItem>({
         defaultValues : {
             unit: "A2",
@@ -44,13 +45,15 @@ const AddItemForm :React.FC<AddingOperation> = ({
         setLoading(false) ;
         if (res.success && res.success.length > 0)
             router.push("/dashboard");
+        else
+            setError(res.err)
         
     }
 
   return (
     <div>
         <h1> Add Items </h1>
-        {
+        <>{
             loading ? <><span className="loading loading-ring loading-xl"></span></> 
             :
         <form onSubmit={handleSubmit((d)=>createItem(d))} className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
@@ -121,21 +124,22 @@ const AddItemForm :React.FC<AddingOperation> = ({
 
              {/* threshhold */}
             <div className=" fieldset flex flex-col gap-1">
-            <label className='label' htmlFor="re">Reorder Threshold</label>
+            <label className='label' htmlFor="reorderThreshold">Reorder Threshold</label>
             <input
                 type="number"
                 {...register("reorderThreshold",{
                     valueAsNumber : true
                 })}
             />
-            <p className="text-center text-red-500">{errors.quantity?.message}</p>
+            <p className="text-center text-red-500">{errors.reorderThreshold?.message}</p>
             </div>
 
             {/* Actions */}
             <button className="btn btn-neutral mt-4" type="submit">Submit</button>
             <button className="btn btn-ghost mt-1" type="reset">Reset</button>
+            <h1 className='text-6xl text-error'>{reqError}</h1>
         </form>
-        }
+        }</>
     </div>
   )
 }

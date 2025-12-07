@@ -16,5 +16,10 @@ o Known limitations & next steps
 - Docs & DevEx (10): README, env/seed, clear run instructions
 - Testing/Bonus (5): Any automated tests or optional extras
 
+## Deployed 
+- https://pizza-pantry-psi.vercel.app/ 
 
-https://clerk.com/docs/nextjs/guides/development/custom-sign-in-or-up-page
+## References
+- https://clerk.com/docs/nextjs/guides/development/custom-sign-in-or-up-page
+
+- 

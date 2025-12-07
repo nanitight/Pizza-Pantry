@@ -1,3 +1,4 @@
+import { SignedOut, SignInButton } from "@clerk/nextjs";
 
 export default function Home() {
   return (<main className="min-h-screen bg-base-100">
@@ -12,9 +13,13 @@ export default function Home() {
             </p>
 
             <div className="flex justify-center gap-4">
-              <a href="/dashboard" className="btn btn-primary btn-lg">
-                Login
-              </a>
+              <SignedOut>
+                <SignInButton>
+                <button className="btn btn-primary btn-lg">
+                  Login
+                </button>
+                </SignInButton>
+              </SignedOut>
               <a href="#features" className="btn btn-outline btn-lg">
                 View Demo
               </a>
@@ -59,8 +64,18 @@ export default function Home() {
           <div className="mockup-window border bg-base-300">
             <div className="p-8">
               <img
-                src="/demo-preview.png"
+                src="/inventory 1.gif"
                 alt="App Preview"
+                className="rounded-lg shadow-lg"
+              />
+            </div>
+          </div>
+
+          <div className="mockup-window border bg-base-300">
+            <div className="p-8">
+              <img
+                src="/inventory 2.gif"
+                alt="App Preview 2"
                 className="rounded-lg shadow-lg"
               />
             </div>
