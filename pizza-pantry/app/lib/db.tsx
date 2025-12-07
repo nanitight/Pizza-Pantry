@@ -1,6 +1,6 @@
 "use server"
 import { Collection, MongoClient, ServerApiVersion } from "mongodb";
-import { AddItemResults, BaseItem, ItemDBRecord } from "../interfaces/defaults";
+import { AddItemResults, BaseItem, ItemToDBRecord } from "../interfaces/defaults";
 
 const uri = process.env.DB_URI ;  
 
@@ -35,7 +35,7 @@ async function getCollection(collectionName:string) {
     try{
         const db = await getDB('pizza-pantry') ;
         if (db)
-          return db.collection<ItemDBRecord>(collectionName) ;
+          return db.collection<ItemToDBRecord>(collectionName) ;
     }
     catch(err) 
     {console.log(err) ;}
@@ -46,7 +46,7 @@ export async function saveItem(item: BaseItem){
 
 }
 
-export const submit = async (data: ItemDBRecord) : Promise<AddItemResults>  =>{
+export const submit = async (data: ItemToDBRecord) : Promise<AddItemResults>  =>{
   var res : AddItemResults = {
       success : "" ,
       err : "" 
@@ -60,7 +60,7 @@ export const submit = async (data: ItemDBRecord) : Promise<AddItemResults>  =>{
 
   try{
     const adding = await collection.insertOne(data)
-    res.success = adding.insertedId
+    res.success = adding.insertedId.toString() ;
         return res ;
   }
   catch(err){

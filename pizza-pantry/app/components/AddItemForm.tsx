@@ -1,6 +1,6 @@
 "use client" ;
 import React, { useState } from 'react'
-import { AddingOperation, AddItemResults, BaseItem, ItemDBRecord } from '../interfaces/defaults'
+import { AddingOperation, AddItemResults, BaseItem, ItemToDBRecord } from '../interfaces/defaults'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { BaseItemScehemeValidator } from '../dashboard/validation'
 import { useForm } from 'react-hook-form'
@@ -19,7 +19,6 @@ const AddItemForm :React.FC<AddingOperation> = ({
             quantity:0 ,
             reorderThreshold:0 ,
             costPrice : 0.0,
-            _id:""
         },
         resolver : zodResolver(BaseItemScehemeValidator)
     })
@@ -29,7 +28,7 @@ const AddItemForm :React.FC<AddingOperation> = ({
     const createItem = async (data : BaseItem) =>{
         setLoading(true) ;
         console.log('c',data)
-        var item : ItemDBRecord = 
+        var item : ItemToDBRecord = 
         {
             ...data ,
             createdAt : new Date() ,

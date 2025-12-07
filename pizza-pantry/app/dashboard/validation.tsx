@@ -1,5 +1,4 @@
 import z from "zod" 
-import { BaseItem } from "../interfaces/defaults"
 
 // : z.ZodType<BaseItem> 
 export const BaseItemScehemeValidator = z.object({
@@ -8,7 +7,6 @@ export const BaseItemScehemeValidator = z.object({
     unit :  z.string().min(1, { message: "unit is required." }),
     quantity: z.number().min(1, { message: "Cannot add 0 items." }),
     reorderThreshold:  z.number(),
-    _id:  z.string(),
     costPrice : z.number().min(0.1, { message: "Cannot have cost of 0." })
 })
 

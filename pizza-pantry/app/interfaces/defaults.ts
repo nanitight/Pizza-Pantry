@@ -1,12 +1,13 @@
 import type{ EmailAddress, User } from '@clerk/nextjs/server';
-export interface ItemDBRecord extends BaseItem{
+export interface ItemToDBRecord extends BaseItem{
     updatedAt : Date ;
     createdAt : Date ;
     createdBy : ClerkUser
 }
-
-export interface BaseItem{
+interface DBObject {
     _id: string ;
+}
+export interface BaseItem {
     name:string ;
     category:string;
     unit : string ;
@@ -16,13 +17,16 @@ export interface BaseItem{
     
 }
 
+interface BaseItemFromDB extends DBObject{
+}
+
 export interface ClerkUser {
     firstName: string ;
     email : string  ;
 }
 
 export interface AddingOperation{
-    addToDb : (data: ItemDBRecord) => Promise< AddItemResults>,
+    addToDb : (data: ItemToDBRecord) => Promise< AddItemResults>,
     onSuccess? : ()=>void
     user : ClerkUser
 }
