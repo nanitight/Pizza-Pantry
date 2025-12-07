@@ -50,8 +50,8 @@ const Dashboard = async () => {
                 <tbody>
                   {
                     items && items.length>0 ? 
-                      items.map(obj=> 
-                        <ItemTableDataCard />
+                      items.map((obj, i)=> 
+                        <ItemTableDataCard key={i} />
                       )
                     : 
                     <h1 className='text-error text-3xl'> Nothing In Inventory</h1>
