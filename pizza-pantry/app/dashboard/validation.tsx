@@ -1,5 +1,5 @@
 import z from "zod" 
-import { BaseItem } from "../interfaces/item"
+import { BaseItem } from "../interfaces/defaults"
 
 // : z.ZodType<BaseItem> 
 export const BaseItemScehemeValidator = z.object({
@@ -9,7 +9,7 @@ export const BaseItemScehemeValidator = z.object({
     quantity: z.number().min(1, { message: "Cannot add 0 items." }),
     reorderThreshold:  z.number(),
     _id:  z.string(),
-    costPrice : z.number().min(1, { message: "Cannot have cost of 0." })
+    costPrice : z.number().min(0.1, { message: "Cannot have cost of 0." })
 })
 
 export type BaseItemScehema = z.infer<typeof BaseItemScehemeValidator>

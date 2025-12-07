@@ -1,5 +1,6 @@
 "use server"
 import { Collection, MongoClient, ServerApiVersion } from "mongodb";
+import { AddItemResults, BaseItem } from "../interfaces/defaults";
 
 const uri = process.env.DB_URI ;  
 
@@ -40,5 +41,17 @@ async function getCollection(collectionName:string) : Promise<Collection<Documen
     {console.log(err) ;}
     return null
 }
+
+export async function saveItem(item: BaseItem){
+
+}
+
+export const submit = async (data: BaseItem) : Promise<AddItemResults>  =>{
+        var res : AddItemResults = {
+            success : "" ,
+            err : "" 
+        }
+            return res ;
+    }
 
 export default getCollection ;
