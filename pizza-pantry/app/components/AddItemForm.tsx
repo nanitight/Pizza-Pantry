@@ -1,10 +1,11 @@
 "use client" ;
 import React, { useState } from 'react'
-import { AddingOperation, AddItemResults, BaseItem, ItemToDBRecord } from '../interfaces/defaults'
+import { AddingOperation, BaseItem, ItemToDBRecord } from '../interfaces/defaults'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { BaseItemScehemeValidator } from '../dashboard/validation'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation';
+import { AddItemResults } from '../interfaces/api';
 
 
 

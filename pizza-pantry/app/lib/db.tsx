@@ -1,6 +1,7 @@
 "use server"
 import { Collection, MongoClient, ServerApiVersion } from "mongodb";
-import { AddItemResults, BaseItem, ItemToDBRecord } from "../interfaces/defaults";
+import {  BaseItem, ItemFromDB, ItemToDBRecord } from "../interfaces/defaults";
+import { AddItemResults, GetItemResults } from "../interfaces/api";
 
 const uri = process.env.DB_URI ;  
 
@@ -31,28 +32,29 @@ async function getDB(dbName:string) {
   // }
 }
 
-async function getCollection(collectionName:string) {
+const dbName = "pizza-pantry" ;
+const collName = "items" ;
+
+async function getCollection(collectionName:string,from:boolean = false) {
     try{
-        const db = await getDB('pizza-pantry') ;
+        const db = await getDB(dbName) ;
         if (db)
           return db.collection<ItemToDBRecord>(collectionName) ;
+
     }
     catch(err) 
     {console.log(err) ;}
     return null
 }
 
-export async function saveItem(item: BaseItem){
-
-}
 
 export const submit = async (data: ItemToDBRecord) : Promise<AddItemResults>  =>{
-  var res : AddItemResults = {
+  let res : AddItemResults = {
       success : "" ,
       err : "" 
   }
 
-  const collection = await getCollection("items") ;
+  const collection = await getCollection(collName) ;
   if ( collection == null ){
     res.err = "Server error!" ;
     return res; 
@@ -68,4 +70,37 @@ export const submit = async (data: ItemToDBRecord) : Promise<AddItemResults>  =>
     res.err = "something wrong" ;
     return res ;
   }
+}
+
+export const getItems = async () : Promise<GetItemResults> =>  {
+  let res : GetItemResults = {
+      success : [] ,
+      err : "" 
+  }
+  const db = await getDB(dbName) ;
+        if (!db){
+          return res ;
+        }
+        else{
+          const collection = db.collection<ItemFromDB>(collName) ;
+        
+        if ( collection == null ){
+          res.err = "Server error!" ;
+          return res; 
+        }
+
+        try{
+          const find = await collection.find({
+
+          })
+          .toArray() ;
+          res.success = JSON.parse(JSON.stringify(find)) ;
+              return res ;
+  }
+  catch(err){
+    console.log("some ",err)
+    res.err = "something wrong" ;
+    return res ;
+  }
+}
 }

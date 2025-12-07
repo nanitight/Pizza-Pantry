@@ -1,12 +1,25 @@
-import React from 'react'
-import PizzaCard from '../components/PizzaCard'
+"use client"
+import React, { useEffect, useState } from 'react'
 import ItemTableDataCard from '../components/ItemTableDataCard';
-import  getCollection from '../lib/db';
 import Link from 'next/link';
+import { ItemFromDB } from '../interfaces/defaults';
+import { getItems } from '../lib/db';
+import { GetItemResults } from '../interfaces/api';
 
-const Dashboard = async () => {
-  const items : string[] = [] ;
-  // const itemsCollection = await getCollection("items") ; 
+const Dashboard = () => {
+  const [items,setItems] = useState<ItemFromDB[]>({} as ItemFromDB[])
+  const fetchItems = async ()=>{
+    const apiResults : GetItemResults = await getItems() ;
+    if (!apiResults.err)
+      setItems(apiResults.success) ;
+
+  }
+
+  useEffect(()=>{
+    fetchItems();
+  },[]);
+
+
   return (
     <div className="p-4 bg-base-100 max-h-1">
         <h1 className="text-3xl font-bold mb-4 text-primary">Inventory Stock Tracker</h1>
@@ -51,7 +64,9 @@ const Dashboard = async () => {
                   {
                     items && items.length>0 ? 
                       items.map((obj, i)=> 
-                        <ItemTableDataCard key={i} />
+                        <ItemTableDataCard  key={i}  name={obj.name} 
+                        category={obj.category} unit={obj.unit} quantity={obj.quantity}
+                        />
                       )
                     : 
                     <h1 className='text-error text-3xl'> Nothing In Inventory</h1>

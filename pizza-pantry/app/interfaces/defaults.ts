@@ -1,11 +1,18 @@
 import type{ EmailAddress, User } from '@clerk/nextjs/server';
-export interface ItemToDBRecord extends BaseItem{
+import { AddItemResults } from './api';
+import { ObjectId } from 'mongodb';
+
+export interface Item extends BaseItem{
     updatedAt : Date ;
     createdAt : Date ;
     createdBy : ClerkUser
 }
+
+export interface ItemToDBRecord extends Item{
+    
+}
 interface DBObject {
-    _id: string ;
+    _id: ObjectId;
 }
 export interface BaseItem {
     name:string ;
@@ -13,12 +20,15 @@ export interface BaseItem {
     unit : string ;
     quantity: number ;
     reorderThreshold: number ;
-    costPrice : number ;
-    
+    costPrice : number ;   
 }
 
-interface BaseItemFromDB extends DBObject{
+
+
+interface BaseItemFromDB extends DBObject,BaseItem{
 }
+
+export interface ItemFromDB extends Item,DBObject{}
 
 export interface ClerkUser {
     firstName: string ;
@@ -29,9 +39,4 @@ export interface AddingOperation{
     addToDb : (data: ItemToDBRecord) => Promise< AddItemResults>,
     onSuccess? : ()=>void
     user : ClerkUser
-}
-
-export interface AddItemResults{
-    err: string ;
-    success: string ;
 }
