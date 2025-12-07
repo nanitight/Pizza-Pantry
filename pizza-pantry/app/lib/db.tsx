@@ -1,6 +1,6 @@
 "use server"
 import { Collection, MongoClient, ServerApiVersion } from "mongodb";
-import { AddItemResults, BaseItem } from "../interfaces/defaults";
+import { AddItemResults, BaseItem, ItemDBRecord } from "../interfaces/defaults";
 
 const uri = process.env.DB_URI ;  
 
@@ -26,16 +26,16 @@ async function getDB(dbName:string) {
   } catch(err) {
     console.log("Error: ",err);
   }
-  finally{
-    client.close();
-  }
+  // finally{
+  //   client.close();
+  // }
 }
 
-async function getCollection(collectionName:string) : Promise<Collection<Document> | null>  {
+async function getCollection(collectionName:string) {
     try{
         const db = await getDB('pizza-pantry') ;
         if (db)
-            return db.collection(collectionName) ;
+            return db.collection<ItemDBRecord>(collectionName) ;
     }
     catch(err) 
     {console.log(err) ;}
@@ -46,12 +46,26 @@ export async function saveItem(item: BaseItem){
 
 }
 
-export const submit = async (data: BaseItem) : Promise<AddItemResults>  =>{
-        var res : AddItemResults = {
-            success : "" ,
-            err : "" 
-        }
-            return res ;
-    }
+export const submit = async (data: ItemDBRecord) : Promise<AddItemResults>  =>{
+  var res : AddItemResults = {
+      success : "" ,
+      err : "" 
+  }
 
-export default getCollection ;
+  const collection = await getCollection("items") ;
+  if ( collection == null ){
+    res.err = "Server error!" ;
+    return res; 
+  }
+
+  try{
+    const adding = await collection.insertOne(data)
+    res.success = adding.insertedId
+        return res ;
+  }
+  catch(err){
+    console.log("some ",err)
+    res.err = "something wrong" ;
+    return res ;
+  }
+}

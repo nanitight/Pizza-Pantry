@@ -1,5 +1,5 @@
 "use client" ;
-import React from 'react'
+import React, { useState } from 'react'
 import { AddingOperation, AddItemResults, BaseItem, ItemDBRecord } from '../interfaces/defaults'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { BaseItemScehemeValidator } from '../dashboard/validation'
@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 const AddItemForm :React.FC<AddingOperation> = ({
     addToDb,user,onSuccess
 }) => {
+    const [loading,setLoading] = useState(false)
     const {register,handleSubmit,formState : {errors}} = useForm<BaseItem>({
         defaultValues : {
             unit: "A2",
@@ -26,6 +27,7 @@ const AddItemForm :React.FC<AddingOperation> = ({
     const router = useRouter() ;
     
     const createItem = async (data : BaseItem) =>{
+        setLoading(true) ;
         console.log('c',data)
         var item : ItemDBRecord = 
         {
@@ -39,6 +41,7 @@ const AddItemForm :React.FC<AddingOperation> = ({
         }
         var res : AddItemResults = await addToDb(item) ;
         console.log(res, item)
+        setLoading(false) ;
         if (res.success && res.success.length > 0)
             router.push("/dashboard");
         
@@ -47,6 +50,9 @@ const AddItemForm :React.FC<AddingOperation> = ({
   return (
     <div>
         <h1> Add Items </h1>
+        {
+            loading ? <><span className="loading loading-ring loading-xl"></span></> 
+            :
         <form onSubmit={handleSubmit((d)=>createItem(d))} className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
             {/* Name */}
             <div className=" fieldset flex flex-col gap-1">
@@ -129,6 +135,7 @@ const AddItemForm :React.FC<AddingOperation> = ({
             <button className="btn btn-neutral mt-4" type="submit">Submit</button>
             <button className="btn btn-ghost mt-1" type="reset">Reset</button>
         </form>
+        }
     </div>
   )
 }
