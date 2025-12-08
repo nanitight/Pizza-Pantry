@@ -1,6 +1,6 @@
 "use server"
-import { Collection, MongoClient, ObjectId, ServerApiVersion } from "mongodb";
-import {  BaseItem, ItemFromDB, Item } from "../interfaces/defaults";
+import {  MongoClient, ObjectId, ServerApiVersion } from "mongodb";
+import {  ItemFromDB, Item } from "../interfaces/defaults";
 import { AddItemResults, GetItemResults } from "../interfaces/api";
 
 const uri = process.env.DB_URI ;  

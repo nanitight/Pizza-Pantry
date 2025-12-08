@@ -1,6 +1,5 @@
 'use client' ;
-import React, { useRef, useState } from 'react'
-import AddToList from './AddToList';
+import React, { useRef } from 'react'
 import { ItemFromDB } from '../interfaces/defaults';
 import { deleteItem } from '../lib/db';
 import { defaultModalId } from '../data/defaults';

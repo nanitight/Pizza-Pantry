@@ -1,8 +1,11 @@
 import React from 'react'
-
-const UsersPage = () => {
+const UsersPage = async () => {
   return (
-    <div>UsersPage</div>
+    <>
+
+        <div>Users Page</div>
+        <p>{new Date().toLocaleTimeString()}</p>
+    </>
   )
 }
 
