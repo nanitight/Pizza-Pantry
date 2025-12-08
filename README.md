@@ -4,14 +4,6 @@ A basic inventory management web app for a pizza shop, built in next.js . Users 
 ### Notes
  - used Gemini's suggestion to solve the css import error. 
 
-
-- Functionality (30): Meets required flows; auth + CRUD + quantity adjust + audit
-- Code Quality (20): Structure, modularity, naming, reusability, linting
-- UI/UX & Accessibility (20): Clarity, responsiveness, states, a11y
-- Validation & Security (15): Input validation, auth checks, safe APIs
-- Docs & DevEx (10): README, env/seed, clear run instructions
-- Testing/Bonus (5): Any automated tests or optional extras
-
 ## Set up
 - The project requires clerk api keys and mongodb uri in the process.env file. Such information can be requested from ntpnaane@gmail.com. 
 - The standard-default commands apply. 
@@ -27,11 +19,19 @@ A basic inventory management web app for a pizza shop, built in next.js . Users 
 
 ## Pictures / Reel
 
-- ![Preview](./pizza-pantry/public/inventory 1.gif)
-- ![Preview](./pizza-pantry/public/inventory 2.gif)
+- ![Preview](https://github.com/nanitight/Pizza-Pantry/blob/main/pizza-pantry/public/inventory%201.gif)
+- ![Preview](https://github.com/nanitight/Pizza-Pantry/blob/main/pizza-pantry/public/inventory%202.gif)
 
 
 ## References
 - https://clerk.com/docs/nextjs/guides/development/custom-sign-in-or-up-page
 
 - https://gemini.google.com/share/886d1f7fd524 
+
+## Criteria
+- Functionality (30): Meets required flows; auth + CRUD + quantity adjust + audit
+- Code Quality (20): Structure, modularity, naming, reusability, linting
+- UI/UX & Accessibility (20): Clarity, responsiveness, states, a11y
+- Validation & Security (15): Input validation, auth checks, safe APIs
+- Docs & DevEx (10): README, env/seed, clear run instructions
+- Testing/Bonus (5): Any automated tests or optional extras
