@@ -1,6 +1,7 @@
 import type{ EmailAddress, User } from '@clerk/nextjs/server';
 import { AddItemResults } from './api';
 import { ObjectId } from 'mongodb';
+import { int } from 'zod';
 
 export interface Item extends BaseItem{
     updatedAt : Date ;
@@ -43,6 +44,10 @@ export interface AddingOperation extends RecordedOperation{
 
 export interface EditingOperation extends RecordedOperation{
     saveEditToDb? : (data: Item) => Promise< AddItemResults>,
+    item?: ItemFromDB;
 }
 
+export interface EditItemModalProps extends EditingOperation{
+    id:string ;
+}
 

@@ -1,8 +1,6 @@
 "use client" ;
 import React, { useState } from 'react'
-import { AddingOperation, BaseItem, EditingOperation, Item } from '../interfaces/defaults'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { BaseItemScehemeValidator } from '../dashboard/validation'
+import { EditingOperation, Item } from '../interfaces/defaults'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation';
 import { AddItemResults } from '../interfaces/api';
