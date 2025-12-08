@@ -33,8 +33,16 @@ export interface ClerkUser {
     email : string  ;
 }
 
-export interface AddingOperation{
-    addToDb : (data: Item) => Promise< AddItemResults>,
-    onSuccess? : ()=>void
+interface RecordedOperation{
     user : ClerkUser
 }
+
+export interface AddingOperation extends RecordedOperation{
+    addToDb : (data: Item) => Promise< AddItemResults>,
+}
+
+export interface EditingOperation extends RecordedOperation{
+    saveEditToDb? : (data: Item) => Promise< AddItemResults>,
+}
+
+

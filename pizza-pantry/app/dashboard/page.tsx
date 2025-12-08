@@ -2,29 +2,45 @@
 import React, { useEffect, useState } from 'react'
 import ItemTableDataCard from '../components/ItemTableDataCard';
 import Link from 'next/link';
-import { ItemFromDB } from '../interfaces/defaults';
+import { ClerkUser, ItemFromDB } from '../interfaces/defaults';
 import { getItems } from '../lib/db';
 import { GetItemResults } from '../interfaces/api';
+import EditItemModal from '../components/EditItemModal';
+import { defaultModalId } from '../data/defaults';
+import { useAPIRequster } from '../re-use/ApiRequester';
 
 const Dashboard = () => {
   const [items,setItems] = useState<ItemFromDB[]>({} as ItemFromDB[])
   const [apiResults,setResults] = useState<GetItemResults>({} as GetItemResults)
   const [currItem,setCurrItem] = useState<ItemFromDB>({} as ItemFromDB)
+  const [currUser,setCurrUser] = useState<ClerkUser>({} as ClerkUser)
+
+  const {loading,setLoading,loadingScreen} = useAPIRequster() ;
+
   const fetchItems = async ()=>{
+    setLoading(true) ;
+
     const apiResults : GetItemResults = await getItems() ;
     if (!apiResults.err)
       setItems(apiResults.success) ;
     setResults(apiResults) ;
+    setLoading(false) ;
   }
 
   useEffect(()=>{
     fetchItems();
   },[]);
+  const getId = ():string => {
+    return currItem && currItem._id?currItem._id.toString():defaultModalId ;
+  }
 
-
+  console.log("render") ;
   return (
     <div className="p-4 bg-base-100 max-h-1">
         <h1 className="text-3xl font-bold mb-4 text-primary">Inventory Stock Tracker</h1>
+{
+        loading ? loadingScreen : 
+        <>
 
           <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
 
@@ -52,6 +68,19 @@ const Dashboard = () => {
           <div className="overflow-x-auto">
             {
                     items && items.length>0 ? <>
+                    {
+                          /*Modal*/  
+                          }
+                           {/* <input type="checkbox" id={getId()} className="modal-toggle" />
+    <div className={`modal ${getId() !== defaultModalId? "modal-open" :"" }`} role="dialog">
+    <div className="modal-box">
+        <h3 className="text-lg font-bold">Hello!</h3>
+        <p className="py-4">This modal works with a hidden checkbox!</p>
+    </div>
+    <label className="modal-backdrop" htmlFor={getId()}>Close</label>
+    </div> */}
+                          <EditItemModal id={getId()} item={currItem} user={currUser} />
+
                       <table className="table table-zebra w-full">
                               <thead>
                                   <tr>
@@ -65,7 +94,7 @@ const Dashboard = () => {
                                 
                               <tbody>
                                 { items.map((obj, i)=> 
-                                      <ItemTableDataCard  key={i} obj ={obj} 
+                                      <ItemTableDataCard  key={i} obj ={obj} select={setCurrItem}
                                       />
                                     )
                                 }
@@ -79,7 +108,8 @@ const Dashboard = () => {
 
         </div>
    
-        <>{}</>
+        </>
+}
     </div>
   )
 }

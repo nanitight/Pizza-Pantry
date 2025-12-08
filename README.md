@@ -4,6 +4,8 @@ A basic inventory management web app for a pizza shop, built in next.js . Users 
 ### Notes
  - used Gemini's suggestion to solve the css import error. 
 
+ - C ✅ . R ✅ . U ❌ . D ❌
+
 ## Set up
 - The project requires clerk api keys and mongodb uri in the process.env file. Such information can be requested from ntpnaane@gmail.com. 
 - The standard-default commands apply. 

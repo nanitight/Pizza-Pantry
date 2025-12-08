@@ -2,7 +2,7 @@ import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@cl
 import Link from "next/link";
 
 export default function Navbar(){
-    return <nav className="flex gap-8 text-lg p-5 menu menu-vertical lg:menu-horizontal rounded-box">
+    return <nav className="flex gap-8 text-lg p-5 menu menu-vertical lg:menu-horizontal md:menu-horizontal rounded-box">
         <Link className="btn btn-outline btn-lg" href={"/"}>Home</Link>
         <Link className="btn btn-outline btn-lg" href={"/dashboard"}>Dashboard</Link>
         <SignedIn>
