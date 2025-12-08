@@ -9,12 +9,12 @@ import { defaultItem } from '../data/defaults';
 
 
 const EditItemForm  :React.FC<EditingOperation> = ({
-    saveEditToDb,user
+    saveEditToDb,user,item
 }) => {
     const [loading,setLoading] = useState(false)
     const [reqError, setError] = useState("")
     const {register,handleSubmit,formState : {errors}} = useForm<Item>({
-        defaultValues : {...defaultItem},
+        defaultValues : {...item},
         // resolver : zodResolver(BaseItemScehemeValidator)
     })
 
@@ -43,6 +43,12 @@ const EditItemForm  :React.FC<EditingOperation> = ({
             setError(res.err)
         
     }
+
+
+    if (!item)
+        return <>
+        <h1 className="text-lg text-error-content"> No item to edit</h1>
+        </>
 
   return (
     <div>

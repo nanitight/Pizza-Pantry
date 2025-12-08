@@ -34,3 +34,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+pizza-pantry/app/temp/dash.txt
+pizza-pantry/app/dashboard/test

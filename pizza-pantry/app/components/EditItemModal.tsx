@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react'
-import { EditItemModalProps } from '../interfaces/defaults'
+import React from 'react'
+import { ClerkUser, EditItemModalProps } from '../interfaces/defaults'
 import EditItemForm from './EditItemForm';
 
 
 
 const EditItemModal : React.FC<EditItemModalProps>= ({id,item,user}) => {
+  // const simp_user = await useClerkSimpleUser() ;
 
    
     if (item == null || id == null){
@@ -19,7 +20,7 @@ const EditItemModal : React.FC<EditItemModalProps>= ({id,item,user}) => {
     <div className="modal-box">
         <h3 className="text-lg font-bold">Hello!</h3>
         <p className="py-4">This modal works with a hidden checkbox!</p>
-        <EditItemForm  user={user} />
+        <EditItemForm  user={{}as ClerkUser} item={item} />
     </div>
     <label className="modal-backdrop" htmlFor={id}>Close</label>
     </div>

@@ -28,7 +28,7 @@ const ItemTableDataCard :React.FC<Partial<ItemTableDataCardProps>> = ({
                         </td>
                         <td className="text-center space-x-2">
                             <button 
-                                onClick={()=>{console.log(obj);if(select && obj) select(obj) }}>
+                                onClick={()=>{if(select && obj){ select(obj); console.log(obj); }}}>
                             <label htmlFor={ obj && obj._id ? obj._id.toString() : defaultModalId}
                             className="btn btn-sm btn-ghost tooltip" data-tip="Update Item">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 18.07a4.99 4.99 0 0 1-1.308 1.493l-4.137 1.15s-2.585.72-2.906-.328c-.321-1.048 1.15-2.585 1.15-2.585l1.15-4.137a4.99 4.99 0 0 1 1.493-1.308L16.862 4.487Z" /></svg>

@@ -42,7 +42,7 @@ export interface AddingOperation extends RecordedOperation{
 
 export interface EditingOperation extends RecordedOperation{
     saveEditToDb? : (data: Item) => Promise< AddItemResults>,
-    item?: ItemFromDB;
+    item: ItemFromDB;
 }
 
 export interface EditItemModalProps extends EditingOperation{
