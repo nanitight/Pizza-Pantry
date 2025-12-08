@@ -9,11 +9,8 @@ import ItemTableDataCard from '../components/ItemTableDataCard'
 import { defaultModalId } from '../data/defaults'
 import { getItems } from '../lib/db'
 
-interface DashboardProps extends EditingOperation{
 
-}
-
-const DashboardView : React.FC<DashboardProps>= ({}) => {
+const DashboardView : React.FC<EditingOperation>= ({}) => {
     const [items,setItems] = useState<ItemFromDB[]>({} as ItemFromDB[])
     const [apiResults,setResults] = useState<GetItemResults>({} as GetItemResults)
     const [currItem,setCurrItem] = useState<ItemFromDB>({} as ItemFromDB)

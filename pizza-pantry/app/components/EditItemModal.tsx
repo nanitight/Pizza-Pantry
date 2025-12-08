@@ -4,7 +4,7 @@ import EditItemForm from './EditItemForm';
 
 
 
-const EditItemModal : React.FC<EditItemModalProps>= ({id,item,user}) => {
+const EditItemModal : React.FC<EditItemModalProps>= ({id,item}) => {
   // const simp_user = await useClerkSimpleUser() ;
 
    

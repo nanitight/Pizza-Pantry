@@ -1,11 +1,14 @@
 import React from 'react'
 import DashboardView from './views';
-import { useClerkSimpleUser } from '../re-use/useClerkUser';
-import { ItemFromDB } from '../interfaces/defaults';
+import { ClerkUser, ItemFromDB } from '../interfaces/defaults';
+import { currentUser } from '@clerk/nextjs/server';
 
 const Dashboard = async () => {
- 
-  const simp_user = await useClerkSimpleUser() ;
+    const user =await currentUser() ;
+    const simp_user : ClerkUser=  {
+        firstName : user && user.firstName ? user.firstName : "",
+        email : user && user.primaryEmailAddress != null &&( typeof user.primaryEmailAddress === 'string' )? user.primaryEmailAddress : "",
+    }
  
  return (<DashboardView item={{} as ItemFromDB} user={simp_user} />)
 }

@@ -3,11 +3,14 @@ import AddItemForm from '../../components/AddItemForm'
 import { ClerkUser } from '@/app/interfaces/defaults'
 import { submit } from '@/app/lib/db'
 import { currentUser } from '@clerk/nextjs/server'
-import { useClerkSimpleUser } from '@/app/re-use/useClerkUser'
 
 
 const AddItem = async () =>  {
-  const simp_user = await useClerkSimpleUser() ;
+  const user =await currentUser() ;
+      const simp_user : ClerkUser=  {
+          firstName : user && user.firstName ? user.firstName : "",
+          email : user && user.primaryEmailAddress != null &&( typeof user.primaryEmailAddress === 'string' )? user.primaryEmailAddress : "",
+      }
   return (
     <>
     {
