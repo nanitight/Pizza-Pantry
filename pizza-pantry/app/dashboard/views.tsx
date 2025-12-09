@@ -32,7 +32,7 @@ const DashboardView : React.FC<EditingOperation>= ({}) => {
         }
 
     useEffect(()=>{fetchItems()},[]) ;
-        
+        console.log("selected: ",currItem)
   return (
     <div className="p-4 bg-base-100 max-h-1">
         <h1 className="text-3xl font-bold mb-4 text-primary">Inventory Stock Tracker</h1>

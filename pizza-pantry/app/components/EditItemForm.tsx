@@ -1,10 +1,11 @@
 "use client" ;
-import React, { useState } from 'react'
-import { EditingOperation, Item } from '../interfaces/defaults'
+import React, { useEffect, useState } from 'react'
+import { BaseItem, EditingOperation, Item } from '../interfaces/defaults'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation';
 import { AddItemResults } from '../interfaces/api';
-import { defaultItem } from '../data/defaults';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { BaseItemScehemeValidator, ItemSchemeValidator } from '../dashboard/validation';
 
 
 
@@ -13,27 +14,23 @@ const EditItemForm  :React.FC<EditingOperation> = ({
 }) => {
     const [loading,setLoading] = useState(false)
     const [reqError, setError] = useState("")
-    const {register,handleSubmit,formState : {errors}} = useForm<Item>({
+    const {register,handleSubmit,reset,formState : {errors},} = useForm<BaseItem>({
         defaultValues : {...item},
-        // resolver : zodResolver(BaseItemScehemeValidator)
+        resolver : zodResolver(BaseItemScehemeValidator)
     })
 
     const router = useRouter() ;
     
     const editItem = async (data : Item) =>{
-        setLoading(true) ;
-        console.log('c',data)
         const item : Item = 
         {
             ...data ,
             updatedAt : new Date(),
-            createdBy: {
-                firstName : user.firstName ? user.firstName : "",
-                email : user.email ? user.email : "",
-            }
         }
+        console.log('edit og',data, 'save: ',item) ;
         if (!saveEditToDb)
             return
+        setLoading(true) ;
         const res : AddItemResults = await saveEditToDb(item) ;
         console.log(res, item)
         setLoading(false) ;
@@ -43,6 +40,11 @@ const EditItemForm  :React.FC<EditingOperation> = ({
             setError(res.err)
         
     }
+
+    useEffect(()=>{
+        if (item)
+            reset({...item}) ;
+    },[item,reset])
 
 
     if (!item)
@@ -56,7 +58,7 @@ const EditItemForm  :React.FC<EditingOperation> = ({
         <>{
             loading ? <><span className="loading loading-ring loading-xl"></span></> 
             :
-        <form onSubmit={handleSubmit((d)=>editItem(d))} className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+        <form onSubmit={handleSubmit((d)=>editItem({...item,...d}))} className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
             {/* Name */}
             <div className=" fieldset flex flex-col gap-1">
             <label className='label' htmlFor="name">Name</label>

@@ -4,15 +4,15 @@ import EditItemForm from './EditItemForm';
 
 
 
-const EditItemModal : React.FC<EditItemModalProps>= ({id,item}) => {
+const EditItemModal : React.FC<EditItemModalProps>= ({id,item,user}) => {
   // const simp_user = await useClerkSimpleUser() ;
 
    
-    if (item == null || id == null){
-        console.log("clicked while currItem from parent is null") ;
-        return (<></>);
-    }
-        console.log(" mounted modal",item,id) ;
+  if (item == null || id == null){
+      console.log("clicked while currItem from parent is null") ;
+      return (<></>);
+  }
+  console.log(" mounted modal",item,id) ;
   return (
     <>
     <input type="checkbox" id={id} className="modal-toggle" />
@@ -20,7 +20,7 @@ const EditItemModal : React.FC<EditItemModalProps>= ({id,item}) => {
     <div className="modal-box">
         <h3 className="text-lg font-bold">Hello!</h3>
         <p className="py-4">This modal works with a hidden checkbox!</p>
-        <EditItemForm  user={{}as ClerkUser} item={item} />
+        <EditItemForm  user={user} item={item} />
     </div>
     <label className="modal-backdrop" htmlFor={id}>Close</label>
     </div>
