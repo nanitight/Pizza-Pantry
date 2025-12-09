@@ -17,6 +17,7 @@ const DashboardView : React.FC<RecordedOperation>= ({user}) => {
     const [apiResults,setResults] = useState<GetItemResults>({} as GetItemResults)
     const [currItem,setCurrItem] = useState<ItemFromDB>({} as ItemFromDB)
     const [resetError,setResetError] = useState(false); 
+    const [fetched,setFetched] = useState(false); 
     const {loading,setLoading,loadingScreen} = useAPIRequster() ;
     const getId = ():string => {
         return currItem && currItem._id?currItem._id.toString():defaultModalId ;
@@ -32,10 +33,11 @@ const DashboardView : React.FC<RecordedOperation>= ({user}) => {
             setItems(apiResults.success) ;
         setResults(apiResults) ;
         setLoading(false) ;
+        setFetched(true);
         }
     const onResetError = () => setResetError(false) ;
 
-    useEffect(()=>{ if (items.length<= 0) fetchItems()}) ;
+    useEffect(()=>{ if (items.length<= 0 && !fetched) fetchItems()}) ;
         console.log("selected: ",currItem)
   return (
     <div className="p-4 bg-base-100 max-h-1">
