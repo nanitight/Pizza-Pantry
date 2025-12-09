@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation';
 import { AddItemResults } from '../interfaces/api';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { BaseItemScehemeValidator, ItemSchemeValidator } from '../dashboard/validation';
+import { BaseItemScehemeValidator } from '../dashboard/validation';
 
 
 

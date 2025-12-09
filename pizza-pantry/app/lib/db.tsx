@@ -35,7 +35,7 @@ async function getDB(dbName:string) {
 const dbName = "pizza-pantry" ;
 const collName = "items" ;
 
-async function getCollection(collectionName:string,from:boolean = false) {
+async function getCollection(collectionName:string) {
     try{
         const db = await getDB(dbName) ;
         if (db)
@@ -111,23 +111,30 @@ export const deleteItem = async (id:ObjectId) : Promise<GetItemResults> =>  {
       err : "" 
   }
   const db = await getDB(dbName) ;
-        if (!db){
-          return res ;
-        }
-        else{
-          const collection = db.collection<ItemFromDB>(collName) ;
-        
-        if ( collection == null ){
-          res.err = "Server error!" ;
-          return res; 
-        }
+  if (!db){
+    return res ;
+  }
+  else{
+    const collection = db.collection<ItemFromDB>(collName) ;
+  
+  if ( collection == null ){
+    res.err = "Server error!" ;
+    return res; 
+  }
 
-        try{
-          const deleted = await collection.deleteOne({
-            _id : id
-          }) ;
-          res.success = [] ;
-              return res ;
+  try{
+    const deleted = await collection.deleteOne({
+      _id : id
+    }) ;
+    if (deleted.acknowledged)
+    {
+      res.success = [] ;
+        return res ;
+    }  
+    else{
+    res.err = "some error when deleting" ;
+    return res
+    }
   }
   catch(err){
     console.log("some ",err)

@@ -10,11 +10,10 @@ import { defaultModalId } from '../data/defaults'
 import { getItems } from '../lib/db'
 
 
-const DashboardView : React.FC<EditingOperation>= ({}) => {
+const DashboardView : React.FC<EditingOperation>= ({user}) => {
     const [items,setItems] = useState<ItemFromDB[]>({} as ItemFromDB[])
     const [apiResults,setResults] = useState<GetItemResults>({} as GetItemResults)
     const [currItem,setCurrItem] = useState<ItemFromDB>({} as ItemFromDB)
-    const [currUser,setCurrUser] = useState<ClerkUser>({} as ClerkUser)
     const {loading,setLoading,loadingScreen} = useAPIRequster() ;
     const getId = ():string => {
         return currItem && currItem._id?currItem._id.toString():defaultModalId ;
@@ -31,7 +30,7 @@ const DashboardView : React.FC<EditingOperation>= ({}) => {
         setLoading(false) ;
         }
 
-    useEffect(()=>{fetchItems()},[]) ;
+    useEffect(()=>{fetchItems()}) ;
         console.log("selected: ",currItem)
   return (
     <div className="p-4 bg-base-100 max-h-1">
@@ -43,7 +42,7 @@ const DashboardView : React.FC<EditingOperation>= ({}) => {
           <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
 
             <div className="flex items-center space-x-2 w-full md:w-auto">
-                <label className="input input-bordered flex items-center gap-2 flex-grow">
+                <label className="input input-bordered flex items-center gap-2 grow">
                     <input type="text" className="grow" placeholder="Search/filter item name or category" />
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path fillRule="evenodd" d="M9.965 11.536a5.75 5.75 0 1 1 1.06-1.06l2.083 2.083a.75.75 0 0 1-1.06 1.06l-2.083-2.083Zm-4.215-.285a4.25 4.25 0 1 0 0-8.5 4.25 4.25 0 0 0 0 8.5Z" clipRule="evenodd" /></svg>
                 </label>
@@ -77,7 +76,7 @@ const DashboardView : React.FC<EditingOperation>= ({}) => {
     </div>
     <label className="modal-backdrop" htmlFor={getId()}>Close</label>
     </div> */}
-                          <EditItemModal id={getId()} item={currItem} user={currUser} />
+                          <EditItemModal id={getId()} item={currItem} user={user} />
 
                       <table className="table table-zebra w-full">
                               <thead>
