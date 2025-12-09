@@ -1,10 +1,9 @@
 "use client" ;
 import React, { useEffect, useState } from 'react'
-import { BaseItem, BaseItemFromDB, DeleteItemProps, DeletingItemOperation, ItemFromDB} from '../interfaces/defaults'
+import { DeleteItemProps, DeletingItemOperation, ItemFromDB} from '../interfaces/defaults'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation';
-import { AddItemResults, GetItemResults } from '../interfaces/api';
-import { ObjectId } from 'mongodb';
+import { AddItemResults } from '../interfaces/api';
 
 
 
@@ -25,13 +24,19 @@ const DeleteItemForm  :React.FC<DeletingItemOperation> = ({
         if (!deleteItem)
             return
         setLoading(true) ;
-        const res : AddItemResults = await deleteItem(id) ;
-        console.log("res: ",res, id)
-        setLoading(false) ;
-        if (res.success && res.err.length > 0)
-            router.push("/dashboard");
-        else
-            setError(res.err)
+        try{
+            const res : AddItemResults = await deleteItem(id) ;
+            console.log("res: ",res, id)
+            setLoading(false) ;
+            if (res.success && res.err.length > 0)
+                router.push("/dashboard");
+            else
+                setError(res.err)
+        }
+        catch(err){
+            console.log("eroor:",err) ;
+            setError("An error occured")
+        }
     }
 
  useEffect(()=>{
@@ -51,7 +56,7 @@ const DeleteItemForm  :React.FC<DeletingItemOperation> = ({
         <>{
             loading ? <><span className="loading loading-ring loading-xl"></span></> 
             :
-        <form onSubmit={handleSubmit(async(d)=>{await deleteItemFunc(item);})} >
+        <form onSubmit={handleSubmit(async()=>{await deleteItemFunc(item);})} >
             {/* className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4"> */}
           
             {/* Actions */}
