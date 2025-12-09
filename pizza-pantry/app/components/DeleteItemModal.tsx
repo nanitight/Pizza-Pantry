@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import {  DeleteItemProps, DeleteModalProps, ItemModalProps } from '../interfaces/defaults'
+import {  ItemModalProps } from '../interfaces/defaults'
 import DeleteForm from './DeleteForm';
 import { deleteItem } from '../lib/db';
 
 
 
-const DeleteItemModal : React.FC<DeleteModalProps>= ({id,item,user,modalId}) => {
+const DeleteItemModal : React.FC<ItemModalProps>= ({id,item,user,modalId}) => {
   // const simp_user = await useClerkSimpleUser() ;
 
      const [resetError,setResetError] = useState(false); 

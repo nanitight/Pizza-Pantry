@@ -1,4 +1,4 @@
-import { AddItemResults, GetItemResults } from './api';
+import { AddItemResults } from './api';
 import { ObjectId } from 'mongodb';
 
 export interface Item extends BaseItem{
@@ -57,8 +57,8 @@ export interface FailureFeedbackResponse{
     onReset : ()=>void
 }
 
-export interface DeleteModalProps extends ItemModalProps{
-}
+// export interface DeleteModalProps extends ItemModalProps{
+// }
 
 export interface EditingOperation extends ItemRecordedOperation{
     saveEditToDb? : (data: Item) => Promise< AddItemResults>,
