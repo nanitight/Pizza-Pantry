@@ -36,6 +36,10 @@ export interface RecordedOperation{
     user : ClerkUser
 }
 
+export interface DashboardViewProps extends RecordedOperation {
+    items : ItemFromDB[]
+}
+
 export interface AddingOperation extends RecordedOperation{
     addToDb : (data: Item) => Promise< AddItemResults>,
 }
@@ -53,7 +57,7 @@ export interface FailureFeedbackResponse{
     onReset : ()=>void
 }
 
-export interface DeleteModalProps extends ItemModalProps, FailureFeedbackResponse{
+export interface DeleteModalProps extends ItemModalProps{
 }
 
 export interface EditingOperation extends ItemRecordedOperation{

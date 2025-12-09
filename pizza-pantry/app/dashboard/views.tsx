@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { ItemFromDB, RecordedOperation } from '../interfaces/defaults'
+import { DashboardViewProps, ItemFromDB, RecordedOperation } from '../interfaces/defaults'
 import { GetItemResults } from '../interfaces/api'
 import { useAPIRequster } from '../re-use/ApiRequester'
 import Link from 'next/link'
@@ -12,11 +12,10 @@ import DeleteItemModal from '../components/DeleteItemModal'
 import { get } from 'http'
 
 
-const DashboardView : React.FC<RecordedOperation>= ({user}) => {
-    const [items,setItems] = useState<ItemFromDB[]>([] as ItemFromDB[])
+const DashboardView : React.FC<DashboardViewProps>= ({user,items}) => {
+    // const [items,setItems] = useState<ItemFromDB[]>([] as ItemFromDB[])
     const [apiResults,setResults] = useState<GetItemResults>({} as GetItemResults)
     const [currItem,setCurrItem] = useState<ItemFromDB>({} as ItemFromDB)
-    const [resetError,setResetError] = useState(false); 
     const [fetched,setFetched] = useState(false); 
     const {loading,setLoading,loadingScreen} = useAPIRequster() ;
     const getId = ():string => {
@@ -25,20 +24,10 @@ const DashboardView : React.FC<RecordedOperation>= ({user}) => {
     const getEditModalID = () : string => editModalPrefix + getId() ;
     const getDeleteModalID = () : string =>deleteModalPrefix + getId() ;
         
-    const fetchItems = async ()=>{
-        setLoading(true) ;
+    
 
-        const apiResults : GetItemResults = await getItems() ;
-        if (!apiResults.err)
-            setItems(apiResults.success) ;
-        setResults(apiResults) ;
-        setLoading(false) ;
-        setFetched(true);
-        }
-    const onResetError = () => setResetError(false) ;
-
-    useEffect(()=>{ if (items.length<= 0 && !fetched) fetchItems()}) ;
-        console.log("selected: ",currItem)
+    // useEffect(()=>{ if (items.length<= 0 && !fetched) fetchItems()}) ;
+    //     console.log("selected: ",currItem)
   return (
     <div className="p-4 bg-base-100 max-h-1">
         <h1 className="text-3xl font-bold mb-4 text-primary">Inventory Stock Tracker</h1>
@@ -84,7 +73,7 @@ const DashboardView : React.FC<RecordedOperation>= ({user}) => {
     <label className="modal-backdrop" htmlFor={getId()}>Close</label>
     </div> */}
                     <EditItemModal id={getId()} modalId={getEditModalID()} item={currItem} user={user} />
-                    <DeleteItemModal id={getId()} modalId={getDeleteModalID()} item={currItem} user={user}  resetError onReset={onResetError}/>        
+                    <DeleteItemModal id={getId()} modalId={getDeleteModalID()} item={currItem} user={user}  />        
                       <table className="table table-zebra w-full">
                               <thead>
                                   <tr>

@@ -28,8 +28,8 @@ const DeleteItemForm  :React.FC<DeletingItemOperation> = ({
             const res : AddItemResults = await deleteItem(id) ;
             console.log("res: ",res, id)
             setLoading(false) ;
-            if (res.success && res.err.length > 0)
-                router.push("/dashboard");
+            if (res.success && res.err.length <= 0)
+                router.refresh();
             else
                 setError(res.err)
         }
@@ -40,8 +40,10 @@ const DeleteItemForm  :React.FC<DeletingItemOperation> = ({
     }
 
  useEffect(()=>{
-    if (resetError)
-      console.log("reset the error")
+    if (resetError){
+        console.log("reset the error")
+        setError("")
+    }
   },[resetError,onReset])
 
    
@@ -52,15 +54,14 @@ const DeleteItemForm  :React.FC<DeletingItemOperation> = ({
 
   return (
     <div>
-        <h1> Add Items </h1>
+        {/* <h1> Add Items </h1> */}
         <>{
             loading ? <><span className="loading loading-ring loading-xl"></span></> 
             :
         <form onSubmit={handleSubmit(async()=>{await deleteItemFunc(item);})} >
-            {/* className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4"> */}
           
             {/* Actions */}
-            <button className="btn btn-neutral mt-4" type="submit">Submit</button>
+            <button className="btn btn-error mt-4" type="submit">Delete!</button>
             <h1 className='text-6xl text-error'>{reqError}</h1>
         </form>
         }</>

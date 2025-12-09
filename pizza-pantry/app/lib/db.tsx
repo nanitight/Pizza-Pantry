@@ -123,9 +123,14 @@ export const deleteItem = async (item:ItemFromDB) : Promise<AddItemResults> =>  
   }
 
   try{
+
     const filter : Partial<ItemFromDB> = {
-      unit: item.unit,
-      // name: it
+      _id : item._id
+    }
+    
+    
+    if (item._id && typeof item._id === 'string') {
+      filter._id = new ObjectId(item._id);
     }
     const deleted = await collection.deleteOne(filter) ;
     if (deleted.deletedCount)
