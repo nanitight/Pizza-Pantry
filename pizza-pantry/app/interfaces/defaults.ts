@@ -1,4 +1,4 @@
-import { AddItemResults } from './api';
+import { AddItemResults, GetItemResults } from './api';
 import { ObjectId } from 'mongodb';
 
 export interface Item extends BaseItem{
@@ -22,7 +22,7 @@ export interface BaseItem {
 
 
 
-interface BaseItemFromDB extends DBObject,BaseItem{
+export interface BaseItemFromDB extends DBObject,BaseItem{
 }
 
 export interface ItemFromDB extends Item,DBObject{}
@@ -32,7 +32,7 @@ export interface ClerkUser {
     email : string  ;
 }
 
-interface RecordedOperation{
+export interface RecordedOperation{
     user : ClerkUser
 }
 
@@ -40,12 +40,34 @@ export interface AddingOperation extends RecordedOperation{
     addToDb : (data: Item) => Promise< AddItemResults>,
 }
 
-export interface EditingOperation extends RecordedOperation{
-    saveEditToDb? : (data: Item) => Promise< AddItemResults>,
+interface ItemRecordedOperation extends RecordedOperation{
     item: ItemFromDB;
 }
-
-export interface EditItemModalProps extends EditingOperation{
+export interface ItemModalProps extends ItemRecordedOperation{
     id:string ;
+    modalId:string ;
+}
+
+export interface FailureFeedbackResponse{
+    resetError: boolean ;
+    onReset : ()=>void
+}
+
+export interface DeleteModalProps extends ItemModalProps, FailureFeedbackResponse{
+}
+
+export interface EditingOperation extends ItemRecordedOperation{
+    saveEditToDb? : (data: Item) => Promise< AddItemResults>,
+}
+
+export interface DeletingItemOperation extends ItemRecordedOperation,FailureFeedbackResponse{
+    deleteItem? : (item: ItemFromDB) => Promise< AddItemResults>,
+    id: ObjectId;
+}
+
+
+
+export interface DeleteItemProps{
+    id : ObjectId ;
 }
 

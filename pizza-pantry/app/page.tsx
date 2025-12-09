@@ -65,6 +65,8 @@ export default function Home() {
           <div className="mockup-window border bg-base-300">
             <div className="p-8">
               <Image
+                width={100}
+                height={100}
                 src="/inventory 1.gif"
                 alt="App Preview"
                 className="rounded-lg shadow-lg"
@@ -75,6 +77,8 @@ export default function Home() {
           <div className="mockup-window border bg-base-300">
             <div className="p-8">
               <Image
+                width={100}
+                height={100}
                 src="/inventory 2.gif"
                 alt="App Preview 2"
                 className="rounded-lg shadow-lg"

@@ -10,7 +10,7 @@ const Dashboard = async () => {
         email : user && user.primaryEmailAddress != null &&( typeof user.primaryEmailAddress === 'string' )? user.primaryEmailAddress : "",
     }
  
- return (<DashboardView item={{} as ItemFromDB} user={simp_user} />)
+ return (<DashboardView user={simp_user} />)
 }
 
 export default Dashboard

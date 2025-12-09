@@ -7,3 +7,5 @@ export const defaultItem = {
         }
 
 export const defaultModalId="no-name-some-how" ;
+export const editModalPrefix="edit:" ;
+export const deleteModalPrefix="delete:" ;

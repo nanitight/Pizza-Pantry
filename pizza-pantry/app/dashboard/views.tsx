@@ -1,24 +1,28 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { ClerkUser, EditingOperation, ItemFromDB } from '../interfaces/defaults'
+import { ItemFromDB, RecordedOperation } from '../interfaces/defaults'
 import { GetItemResults } from '../interfaces/api'
 import { useAPIRequster } from '../re-use/ApiRequester'
 import Link from 'next/link'
 import EditItemModal from '../components/EditItemModal'
 import ItemTableDataCard from '../components/ItemTableDataCard'
-import { defaultModalId } from '../data/defaults'
+import { defaultModalId, deleteModalPrefix, editModalPrefix } from '../data/defaults'
 import { getItems } from '../lib/db'
+import DeleteItemModal from '../components/DeleteItemModal'
+import { get } from 'http'
 
 
-const DashboardView : React.FC<EditingOperation>= ({user}) => {
-    const [items,setItems] = useState<ItemFromDB[]>({} as ItemFromDB[])
+const DashboardView : React.FC<RecordedOperation>= ({user}) => {
+    const [items,setItems] = useState<ItemFromDB[]>([] as ItemFromDB[])
     const [apiResults,setResults] = useState<GetItemResults>({} as GetItemResults)
     const [currItem,setCurrItem] = useState<ItemFromDB>({} as ItemFromDB)
+    const [resetError,setResetError] = useState(false); 
     const {loading,setLoading,loadingScreen} = useAPIRequster() ;
     const getId = ():string => {
         return currItem && currItem._id?currItem._id.toString():defaultModalId ;
         }
-
+    const getEditModalID = () : string => editModalPrefix + getId() ;
+    const getDeleteModalID = () : string =>deleteModalPrefix + getId() ;
         
     const fetchItems = async ()=>{
         setLoading(true) ;
@@ -29,8 +33,9 @@ const DashboardView : React.FC<EditingOperation>= ({user}) => {
         setResults(apiResults) ;
         setLoading(false) ;
         }
+    const onResetError = () => setResetError(false) ;
 
-    useEffect(()=>{fetchItems()}) ;
+    useEffect(()=>{ if (items.length<= 0) fetchItems()}) ;
         console.log("selected: ",currItem)
   return (
     <div className="p-4 bg-base-100 max-h-1">
@@ -76,8 +81,8 @@ const DashboardView : React.FC<EditingOperation>= ({user}) => {
     </div>
     <label className="modal-backdrop" htmlFor={getId()}>Close</label>
     </div> */}
-                          <EditItemModal id={getId()} item={currItem} user={user} />
-
+                    <EditItemModal id={getId()} modalId={getEditModalID()} item={currItem} user={user} />
+                    <DeleteItemModal id={getId()} modalId={getDeleteModalID()} item={currItem} user={user}  resetError onReset={onResetError}/>        
                       <table className="table table-zebra w-full">
                               <thead>
                                   <tr>
@@ -91,7 +96,7 @@ const DashboardView : React.FC<EditingOperation>= ({user}) => {
                                 
                               <tbody>
                                 { items.map((obj, i)=> 
-                                      <ItemTableDataCard  key={i} obj ={obj} select={setCurrItem}
+                                      <ItemTableDataCard  key={i} obj ={obj} select={setCurrItem} editModalID={getEditModalID()} deleteModalID={getDeleteModalID()}
                                       />
                                     )
                                 }

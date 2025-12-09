@@ -105,9 +105,9 @@ export const getItems = async () : Promise<GetItemResults> =>  {
 }
 }
 
-export const deleteItem = async (id:ObjectId) : Promise<GetItemResults> =>  {
-  const res : GetItemResults = {
-      success : [] ,
+export const deleteItem = async (item:ItemFromDB) : Promise<AddItemResults> =>  {
+  const res : AddItemResults = {
+      success : "" ,
       err : "" 
   }
   const db = await getDB(dbName) ;
@@ -123,16 +123,18 @@ export const deleteItem = async (id:ObjectId) : Promise<GetItemResults> =>  {
   }
 
   try{
-    const deleted = await collection.deleteOne({
-      _id : id
-    }) ;
-    if (deleted.acknowledged)
+    const filter : Partial<ItemFromDB> = {
+      unit: item.unit,
+      // name: it
+    }
+    const deleted = await collection.deleteOne(filter) ;
+    if (deleted.deletedCount)
     {
-      res.success = [] ;
+      res.success =deleted.deletedCount+" deleted items" ;
         return res ;
     }  
     else{
-    res.err = "some error when deleting" ;
+    res.err = "some error when deleting. "+deleted.deletedCount+" deleted items" ;
     return res
     }
   }
