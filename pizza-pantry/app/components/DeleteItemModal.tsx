@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import {  ItemModalProps } from '../interfaces/defaults'
 import DeleteForm from './DeleteForm';
 import { deleteItem } from '../lib/db';
@@ -8,8 +8,8 @@ import { deleteItem } from '../lib/db';
 const DeleteItemModal : React.FC<ItemModalProps>= ({id,item,user,modalId}) => {
   // const simp_user = await useClerkSimpleUser() ;
 
-     const [resetError,setResetError] = useState(false); 
-     
+    const [resetError,setResetError] = useState(false);  
+    const closeBtnRef = useRef<HTMLLabelElement>(null) ;
     const onResetError = () => setResetError(false) ;
  
   if (item == null || id == null){
@@ -24,9 +24,9 @@ const DeleteItemModal : React.FC<ItemModalProps>= ({id,item,user,modalId}) => {
     <div className="modal-box">
         <h3 className="text-lg font-bold">Are you sure you want to delete {item.name}?</h3>
         <div className="modal-action">
-          <label onClick={()=>setResetError(true)} htmlFor={modalId} className="btn btn-neutral">Close!</label>
+          <label ref={closeBtnRef} onClick={()=>setResetError(true)} htmlFor={modalId} className="btn btn-neutral">Close!</label>
         </div>
-        <DeleteForm onReset={onResetError} resetError  user={user} id={item._id} item={item} deleteItem={deleteItem}/>
+        <DeleteForm onReset={onResetError} resetError  user={user} id={item._id} item={item} deleteItem={deleteItem} closeModalButton={closeBtnRef.current}/>
     </div>
     
     </div>

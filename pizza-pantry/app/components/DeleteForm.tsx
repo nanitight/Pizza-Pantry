@@ -1,5 +1,5 @@
 "use client" ;
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState ,Ref,forwardRef} from 'react'
 import { DeleteItemProps, DeletingItemOperation, ItemFromDB} from '../interfaces/defaults'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation';
@@ -7,8 +7,9 @@ import { AddItemResults } from '../interfaces/api';
 
 
 
+
 const DeleteItemForm  :React.FC<DeletingItemOperation> = ({
-    deleteItem,id,item,onReset,resetError
+    deleteItem,id,item,onReset,resetError,closeModalButton
 }) => {
     const [loading,setLoading] = useState(false)
     const [reqError, setError] = useState("")
@@ -26,10 +27,13 @@ const DeleteItemForm  :React.FC<DeletingItemOperation> = ({
         setLoading(true) ;
         try{
             const res : AddItemResults = await deleteItem(id) ;
-            console.log("res: ",res, id)
+            console.log("res: ",res, id,closeModalButton)
             setLoading(false) ;
-            if (res.success && res.err.length <= 0)
+            if (res.success && res.err.length <= 0){
                 router.refresh();
+                if (closeModalButton)
+                    closeModalButton.click() ;
+            }
             else
                 setError(res.err)
         }

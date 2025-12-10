@@ -67,6 +67,7 @@ export interface EditingOperation extends ItemRecordedOperation{
 export interface DeletingItemOperation extends ItemRecordedOperation,FailureFeedbackResponse{
     deleteItem? : (item: ItemFromDB) => Promise< AddItemResults>,
     id: ObjectId;
+    closeModalButton: HTMLLabelElement | null
 }
 
 
