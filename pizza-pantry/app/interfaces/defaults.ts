@@ -1,4 +1,4 @@
-import { AddItemResults } from './api';
+import { AddItemResults, EditItemResults } from './api';
 import { ObjectId } from 'mongodb';
 
 export interface Item extends BaseItem{
@@ -57,22 +57,20 @@ export interface FailureFeedbackResponse{
     onReset : ()=>void
 }
 
-// export interface DeleteModalProps extends ItemModalProps{
-// }
-
-export interface EditingOperation extends ItemRecordedOperation{
-    saveEditToDb? : (data: Item) => Promise< AddItemResults>,
+export interface OperateOnItemObjID{
+    id : ObjectId ;
 }
 
-export interface DeletingItemOperation extends ItemRecordedOperation,FailureFeedbackResponse{
-    deleteItem? : (item: ItemFromDB) => Promise< AddItemResults>,
-    id: ObjectId;
+export interface ModalOpenedComp{
     closeModalButton: HTMLLabelElement | null
 }
 
+export interface EditingOperation extends ItemRecordedOperation,OperateOnItemObjID,ModalOpenedComp,FailureFeedbackResponse{
+    saveEditToDb? : (id:ObjectId,data: Item) => Promise< EditItemResults>;
+}
 
-
-export interface DeleteItemProps{
-    id : ObjectId ;
+export interface DeletingItemOperation extends ItemRecordedOperation,FailureFeedbackResponse,ModalOpenedComp{
+    deleteItem? : (item: ItemFromDB) => Promise< AddItemResults>,
+    id: ObjectId;
 }
 

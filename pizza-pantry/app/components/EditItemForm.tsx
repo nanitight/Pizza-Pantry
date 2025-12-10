@@ -1,16 +1,17 @@
 "use client" ;
 import React, { useEffect, useState } from 'react'
-import { BaseItem, EditingOperation, Item } from '../interfaces/defaults'
+import { BaseItem, EditingOperation, Item, ItemFromDB } from '../interfaces/defaults'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation';
-import { AddItemResults } from '../interfaces/api';
+import { AddItemResults, EditItemResults } from '../interfaces/api';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { BaseItemScehemeValidator } from '../dashboard/validation';
+import Image from 'next/image';
 
 
 
 const EditItemForm  :React.FC<EditingOperation> = ({
-    saveEditToDb,user,item
+    saveEditToDb,id,item,closeModalButton,onReset,resetError
 }) => {
     const [loading,setLoading] = useState(false)
     const [reqError, setError] = useState("")
@@ -21,21 +22,27 @@ const EditItemForm  :React.FC<EditingOperation> = ({
 
     const router = useRouter() ;
     
-    const editItem = async (data : Item) =>{
+    const editItem = async (data : ItemFromDB) =>{
+        
         const item : Item = 
         {
             ...data ,
             updatedAt : new Date(),
         }
+        if (!id)
+        {    
+            console.log('id is null or undefined',id) ; 
+            return ;
+        }
         console.log('edit og',data, 'save: ',item) ;
         if (!saveEditToDb)
-            return
+            return ;
         setLoading(true) ;
-        const res : AddItemResults = await saveEditToDb(item) ;
+        const res : EditItemResults = await saveEditToDb(id,item) ;
         console.log(res, item)
         setLoading(false) ;
-        if (res.success && res.success.length > 0)
-            router.push("/dashboard");
+        if (res.success != null)
+            closeModalButton?.click() ;
         else
             setError(res.err)
         
@@ -46,12 +53,22 @@ const EditItemForm  :React.FC<EditingOperation> = ({
             reset({...item}) ;
     },[item,reset])
 
+        useEffect(()=>{
+            if (resetError){
+                console.log("reset the error")
+                setError("")
+            }
+        },[resetError,onReset])
 
     if (!item)
         return <>
         <h1 className="text-lg text-error-content"> No item to edit</h1>
         </>
 
+    if (!id)
+        return <>
+        <h1 className="text-lg text-error-content"> Id of item is {id}...</h1>
+        </>
   return (
     <div>
         <h1> Add Items </h1>
@@ -136,6 +153,24 @@ const EditItemForm  :React.FC<EditingOperation> = ({
             <p className="text-center text-red-500">{errors.reorderThreshold?.message}</p>
             </div>
 
+            {
+                item.createdBy?
+                <>
+                    <p className="text-xs uppercase font-semibold opacity-60">Created By:</p>
+                    <div className='list bg-base-100 rounded-box shadow-md'>
+                        <div className='list-row'>
+                            <div><Image src={""} alt='Profile avatar'/></div>
+                            <div>{item.createdBy.firstName} =&gt {item.createdBy.email}</div>
+                            {item.createdAt ? 
+                                <div className='list-col-wrap'>{item.createdAt.toString()}</div>
+                            : <></>
+                            }
+                        </div>
+                    </div>
+                </>
+                : <></>
+
+            }
             {/* Actions */}
             <button className="btn btn-neutral mt-4" type="submit">Submit</button>
             <button className="btn btn-ghost mt-1" type="reset">Reset</button>

@@ -1,11 +1,17 @@
-import { ItemFromDB } from "./defaults";
+import { Item, ItemFromDB } from "./defaults";
 
-export interface AddItemResults{
+interface CanError{
     err: string ;
+}
+
+export interface AddItemResults extends CanError{
     success: string ;
 }
 
-export interface GetItemResults{
-    err: string ;
+export interface GetItemResults extends CanError{
     success: ItemFromDB[] ;
+}
+
+export interface EditItemResults extends CanError{
+    success: Item | null;
 }

@@ -2,15 +2,12 @@ import React, { useRef, useState } from 'react'
 import {  ItemModalProps } from '../interfaces/defaults'
 import DeleteForm from './DeleteForm';
 import { deleteItem } from '../lib/db';
-
+import { useModalState } from './ModalState';
 
 
 const DeleteItemModal : React.FC<ItemModalProps>= ({id,item,user,modalId}) => {
   // const simp_user = await useClerkSimpleUser() ;
-
-    const [resetError,setResetError] = useState(false);  
-    const closeBtnRef = useRef<HTMLLabelElement>(null) ;
-    const onResetError = () => setResetError(false) ;
+  const {resetError,closeBtnRef,onResetError,setResetError} = useModalState() ;
  
   if (item == null || id == null){
       console.log("clicked while currItem from parent is null") ;
@@ -26,7 +23,7 @@ const DeleteItemModal : React.FC<ItemModalProps>= ({id,item,user,modalId}) => {
         <div className="modal-action">
           <label ref={closeBtnRef} onClick={()=>setResetError(true)} htmlFor={modalId} className="btn btn-neutral">Close!</label>
         </div>
-        <DeleteForm onReset={onResetError} resetError  user={user} id={item._id} item={item} deleteItem={deleteItem} closeModalButton={closeBtnRef.current}/>
+        <DeleteForm onReset={onResetError} resetError={resetError}  user={user} id={item._id} item={item} deleteItem={deleteItem} closeModalButton={closeBtnRef.current}/>
     </div>
     
     </div>

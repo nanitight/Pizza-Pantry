@@ -1,6 +1,6 @@
 "use client" ;
-import React, { useEffect, useState ,Ref,forwardRef} from 'react'
-import { DeleteItemProps, DeletingItemOperation, ItemFromDB} from '../interfaces/defaults'
+import React, { useEffect, useState } from 'react'
+import { DeletingItemOperation, ItemFromDB, OperateOnItemObjID} from '../interfaces/defaults'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation';
 import { AddItemResults } from '../interfaces/api';
@@ -13,7 +13,7 @@ const DeleteItemForm  :React.FC<DeletingItemOperation> = ({
 }) => {
     const [loading,setLoading] = useState(false)
     const [reqError, setError] = useState("")
-    const {handleSubmit} = useForm<DeleteItemProps>({
+    const {handleSubmit} = useForm<OperateOnItemObjID>({
         defaultValues : id,
     })
 
@@ -21,13 +21,13 @@ const DeleteItemForm  :React.FC<DeletingItemOperation> = ({
     
     const deleteItemFunc =async (id:ItemFromDB)=>{
         
-        console.log('delete og',id) ;
+        // console.log('delete og',id) ;
         if (!deleteItem)
             return
         setLoading(true) ;
         try{
             const res : AddItemResults = await deleteItem(id) ;
-            console.log("res: ",res, id,closeModalButton)
+            // console.log("res: ",res, id,closeModalButton)
             setLoading(false) ;
             if (res.success && res.err.length <= 0){
                 router.refresh();
@@ -43,12 +43,13 @@ const DeleteItemForm  :React.FC<DeletingItemOperation> = ({
         }
     }
 
- useEffect(()=>{
-    if (resetError){
-        console.log("reset the error")
-        setError("")
-    }
-  },[resetError,onReset])
+    useEffect(()=>{
+        if (resetError){
+            console.log("reset the error")
+            setError("")
+            onReset?onReset():""; 
+        }
+    },[resetError,onReset])
 
    
     if (!id)

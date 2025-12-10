@@ -29,7 +29,7 @@ const DashboardView : React.FC<DashboardViewProps>= ({user,items}) => {
     // useEffect(()=>{ if (items.length<= 0 && !fetched) fetchItems()}) ;
     //     console.log("selected: ",currItem)
   return (
-    <div className="p-4 bg-base-100 max-h-1">
+    <div className="p-4 bg-base-100 w-full">
         <h1 className="text-3xl font-bold mb-4 text-primary">Inventory Stock Tracker</h1>
 {
         loading ? loadingScreen : 
@@ -43,7 +43,7 @@ const DashboardView : React.FC<DashboardViewProps>= ({user,items}) => {
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path fillRule="evenodd" d="M9.965 11.536a5.75 5.75 0 1 1 1.06-1.06l2.083 2.083a.75.75 0 0 1-1.06 1.06l-2.083-2.083Zm-4.215-.285a4.25 4.25 0 1 0 0-8.5 4.25 4.25 0 0 0 0 8.5Z" clipRule="evenodd" /></svg>
                 </label>
                 
-                <select defaultValue={"select"} className="select select-bordered w-full max-w-xs md:w-auto">
+                <select defaultValue={"select"} className="select select-bordered w-full max-w-sm md:w-auto">
                     <option disabled value={"select"}>Sort By</option>
                     <option>Name</option>
                     <option>CreatedDate</option>
@@ -58,7 +58,7 @@ const DashboardView : React.FC<DashboardViewProps>= ({user,items}) => {
                 Create New Item
             </Link>
         </div>
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto ">
             {
                     items && items.length>0 ? <>
                     {

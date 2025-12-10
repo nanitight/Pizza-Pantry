@@ -1,7 +1,7 @@
 "use server"
 import {  MongoClient, ObjectId, ServerApiVersion } from "mongodb";
 import {  ItemFromDB, Item } from "../interfaces/defaults";
-import { AddItemResults, GetItemResults } from "../interfaces/api";
+import { AddItemResults, EditItemResults, GetItemResults } from "../interfaces/api";
 
 const uri = process.env.DB_URI ;  
 
@@ -146,6 +146,56 @@ export const deleteItem = async (item:ItemFromDB) : Promise<AddItemResults> =>  
   catch(err){
     console.log("some ",err)
     res.err = "something wrong" ;
+    return res ;
+  }
+}
+}
+
+export const editItem = async (id:ObjectId,item:Item) : Promise<EditItemResults> =>  {
+  const res : EditItemResults = {
+      success : null ,
+      err : "" 
+  }
+  const db = await getDB(dbName) ;
+  if (!db){
+    return res ;
+  }
+  else{
+    const collection = db.collection<ItemFromDB>(collName) ;
+  
+  if ( collection == null ){
+    res.err = "Server error!" ;
+    return res; 
+  }
+
+  try{
+
+    const filter : Partial<ItemFromDB> = {
+      _id : id
+    }
+    
+    
+    if (id && typeof id === 'string') {
+      filter._id = new ObjectId(id);
+    }
+    const {_id, ...itemWithoutId} = item as ItemFromDB
+    const update =  {$set:itemWithoutId}
+    const edited = await collection.updateOne(filter,
+      update) ;
+      console.log("server: ",edited, "\n id: ",id)
+    if (edited.modifiedCount)
+    {
+      res.success =item ;
+        return res ;
+    }  
+    else{
+    res.err = "some error when updating. " ;
+    return res
+    }
+  }
+  catch(err){
+    console.log("some ",err)
+    res.err = "something went wrong!" ;
     return res ;
   }
 }
