@@ -4,16 +4,20 @@ A basic inventory management web app for a pizza shop, built in next.js . Users 
 ### Notes
  - used Gemini's suggestion to solve the css import error. 
 
- - C ✅ . R ✅ . U ❌ . D ❌
+ - No permissions and authorizations yet. 
+
+ - Displays the user name that created the item. ✅
+
+ - C ✅ . R ✅ . U ✅ . D ✅
 
 ## Set up
 - The project requires clerk api keys and mongodb uri in the process.env file. Such information can be requested from ntpnaane@gmail.com. 
 - The standard-default commands apply. 
-`` bash
+``` bash
     npm i 
     npm run dev
     npm run build
-``
+```
 - for easy view, check the deployed version. 
 
 ## Deployed 
